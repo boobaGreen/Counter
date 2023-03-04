@@ -1,0 +1,15 @@
+// COLOR VARIABLES
+$color-background-night: rgb(40, 53, 62);
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  background-color: $color-background-night;
+  height: 100vh;
+}

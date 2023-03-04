@@ -1,0 +1,16 @@
+.design-area {
+  font-size: 1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+
+  border: 5px solid white;
+  background-color: chartreuse;
+
+  background-image: url("/assets/img/background.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: contain;
+  background-position: center;
+}
