@@ -7,6 +7,9 @@ let newBtna;
 let newBtnb;
 let newBtnc;
 let primoGiro = true;
+let tot = 0;
+
+let span = document.getElementById("span");
 
 const img = new Image(); // Create new img element
 img.src = "/assets/img/pecorelle_t.png";
@@ -61,13 +64,13 @@ function drawBtn() {
   // btn.innerText = "Inc";
   // document.body.appendChild(btn);
 
-  let fs = Math.round((W / 250) * 10) / 10;
+  let fs = CanvasHeight / 25;
   if (primoGiro) {
     newBtna = document.createElement("button");
     newBtna.id = "btnDec";
-    newBtna.innerText = "-";
+    newBtna.innerText = "Dec";
     newBtna.className = "btnact";
-    document.querySelector("#dec").appendChild(newBtna);
+    document.querySelector("#decr").appendChild(newBtna);
     newBtnb = document.createElement("button");
     newBtnb.id = "btnRst";
     newBtnb.innerText = "Reset";
@@ -76,7 +79,7 @@ function drawBtn() {
     newBtnc = document.createElement("button");
     newBtnc.className = "btnact";
     newBtnc.id = "btnInc";
-    newBtnc.innerText = "+";
+    newBtnc.innerText = "Inc";
     document.querySelector("#inc").appendChild(newBtnc);
     primoGiro = false;
   }
@@ -127,6 +130,9 @@ function windowResize() {
   console.log(CanvasHeight);
   console.log(CanvasWidth);
   let fs = Math.round((W / 250) * 10) / 10;
+
+  span.style.fontsize = 1 + "em";
+  span.innerHTML = tot;
   drawSheep();
   drawBtn();
 }

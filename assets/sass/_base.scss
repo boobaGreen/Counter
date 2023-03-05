@@ -9,10 +9,11 @@ $color-background-night: #28353e;
   box-sizing: inherit;
 }
 html {
-  font-size: 100%;
+  font-size: 62.5%;
 }
 body {
   box-sizing: border-box;
+  font-family: cotton serif;
   background-color: $color-background-night;
   height: 100vh;
 }
