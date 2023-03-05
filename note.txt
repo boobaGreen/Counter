@@ -1,0 +1,7 @@
+bug 
+
+piccolo bug quando si resize veloce rimane leggermente sfasato il background
+
+grosso bug quando si resiza durante un animazione bug canvas dimensione e posizione
+migliorato molto adesso sull animazione si resetta correttamente anche se con lag ma finita animazionerimane buggato
+

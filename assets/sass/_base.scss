@@ -1,5 +1,5 @@
 // COLOR VARIABLES
-$color-background-night: rgb(40, 53, 62);
+$color-background-night: #28353e;
 
 *,
 *::before,
@@ -8,8 +8,11 @@ $color-background-night: rgb(40, 53, 62);
   padding: 0;
   box-sizing: inherit;
 }
-
+html {
+  font-size: 100%;
+}
 body {
+  box-sizing: border-box;
   background-color: $color-background-night;
   height: 100vh;
 }

@@ -6,18 +6,20 @@
   box-sizing: inherit;
 }
 
+html {
+  font-size: 100%;
+}
+
 body {
-  background-color: rgb(40, 53, 62);
+  box-sizing: border-box;
+  background-color: #28353e;
   height: 100vh;
 }
 
-.design-area {
-  font-size: 1;
-  position: absolute;
+.designArea {
   height: 100%;
   width: 100%;
   margin: 0 auto;
-  background-color: chartreuse;
   background-image: url("/assets/img/background.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -25,8 +27,24 @@ body {
   background-position: center;
 }
 
-.paint-area {
+.act {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+}
+
+#divcmd {
+  position: absolute;
+  height: 100%;
+}
+
+.paintArea {
   background-color: transparent;
+  width: 200px;
+  height: 200px;
 }
 
 .CanvasSheep {
