@@ -9,17 +9,24 @@ const img = new Image(); // Create new img element
 img.src = "/assets/img/pecorelle_t.png";
 let CanvasWidth;
 let CanvasHeight;
-let PositionSheepFramSheet;
+let PositionSheepFrameSheet = 0;
 let SheepActualRatio;
 const SheepOriginalPixel = 121;
 const SheepOriginalRatio = 6.9586776859504132231404958677686;
 let SheepPositionActualLeft = 20;
 let SheepPositionActualBottom = 20;
+let W, H;
+const PositionSheepFrameSheetSelect = [1, 0, 1, 2, 3, 4, 1, 0, 1];
+let actualFrame = 0;
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 function drawSheep() {
   const img = new Image();
   const offSetRiga = 0;
-  const offSetColonna = 1;
+  const offSetColonna = PositionSheepFrameSheetSelect[actualFrame];
   img.onload = () => {
     console.log(CanvasHeight);
     console.log(CanvasWidth);
@@ -43,14 +50,15 @@ function drawSheep() {
     );
   };
   img.src = "/assets/img/pecorelle_t.png";
+  actualFrame++;
 }
 
 function windowResize() {
-  let H = document.getElementById("design-area").clientHeight; // la dimensione senza barre page-up/dw
-  let W = document.getElementById("design-area").clientWidth;
+  H = document.getElementById("design-area").clientHeight; // la dimensione senza barre page-up/dw
+  W = document.getElementById("design-area").clientWidth;
   console.log("Big_H :", H);
   console.log("Big_W :", W);
-  let Bordi_Top = true;
+
   Border_Left = 0;
   let Ratio = W / H;
   if (Ratio <= RATIO_BKGR) {
@@ -72,7 +80,6 @@ function windowResize() {
   document.getElementById("paint-area").style.width = Small_W + "px";
   document.getElementById("paint-area").style.height = Small_H + "px";
   // div posizionao rimane un piccolo glitch ogni tanto con refresh passa tutto
-  // poi iniziamo a posizionare le pecorelle
   var d = document.getElementById("paint-area");
   d.style.position = "absolute";
   d.style.left = Border_Left + "px";
@@ -89,9 +96,23 @@ function windowResize() {
   drawSheep();
 }
 
-function init() {
+async function init() {
   window.addEventListener("resize", windowResize);
   windowResize();
-}
 
+  for (let i = 1; i < 9; i++) {
+    await sleep(2000);
+    if (actualFrame == 0) {
+      SheepPositionActualBottom = 300;
+    } else {
+      SheepPositionActualLeft = actualFrame * (Small_W / 10) + 20;
+    }
+    //SheepPositionActualLeft = actualFrame * CanvasWidth + CanvasWidth;
+    if (actualFrame < 8) {
+    } else {
+    }
+
+    drawSheep();
+  }
+}
 window.onload = init;
