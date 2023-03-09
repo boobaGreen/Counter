@@ -3,64 +3,91 @@
 *::after {
   margin: 0;
   padding: 0;
-  box-sizing: inherit;
+  box-sizing: border-box;
 }
 
-html {
+/* html {
   font-size: 62.5%;
 }
-
 body {
   box-sizing: border-box;
   font-family: cotton serif;
-  background-color: #28353e;
+  background-color: $color-background-night;
   height: 100vh;
-}
-
-.designArea {
-  height: 100%;
+} */
+html,
+body {
+  margin: 0;
+  padding: 0;
   width: 100%;
-  margin: 0 auto;
-  background-image: url("/assets/img/background.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: contain;
-  background-position: center;
+  height: 100%;
 }
 
-.act {
+body {
+  font-weight: 100;
+  font-family: sans-serif;
+  overflow: hidden;
+  -webkit-user-select: none; /* Safari */ /* IE 10 and IE 11 */
+  -moz-user-select: none;
+       user-select: none; /* Standard syntax */
+}
+
+.container {
+  position: relative;
+  height: 60%;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.buttons {
+  position: relative;
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
+  height: 40%;
+}
+
+.counter {
+  height: 40%;
+  color: whitesmoke;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 2rem 5rem;
+  font-size: 1.25rem;
   position: relative;
+  margin: 1.15rem;
 }
 
-#divcmd {
+.btn-2 {
+  color: whitesmoke;
+}
+
+.btn-2::after,
+.btn-2::before {
+  border: 3px solid whitesmoke;
+  content: "";
   position: absolute;
-  height: 100%;
-  text-align: center;
-  vertical-align: middle;
+  width: calc(100% - 6px);
+  height: calc(100% - 6px);
+  left: 0;
+  bottom: 0;
+  z-index: -1;
+  transition: transform 0.3s ease;
 }
 
-.paintArea {
-  background-color: transparent;
-  width: 200px;
-  height: 200px;
+.btn-2:hover::after {
+  transform: translate(-5px, -5px);
 }
 
-.CanvasSheep {
-  background-color: transparent;
+.btn-2:hover::before {
+  transform: translate(5px, 5px);
 }
 
-#span {
-  font-size: 10em;
-  color: bisque;
-  padding-top: 1em;
-}
-
-@font-face {
-  font-family: cotton;
-  src: url("/assets/tff/CottonCandyRegular.ttf");
+#sky {
+  background: linear-gradient(#19303d 30%, #1d3540);
 }/*# sourceMappingURL=main.css.map */

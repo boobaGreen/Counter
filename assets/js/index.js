@@ -1,159 +1,241 @@
-const RATIO_BKGR = 1.41512605;
-let Border_Top;
-let Border_Left;
-let Small_H;
-let Small_W;
-let newBtna;
-let newBtnb;
-let newBtnc;
-let primoGiro = true;
-let tot = 0;
+function drawing_sky() {
+  var c = document.getElementById("sky");
+  c.style.position = "absolute";
+  c.style.zIndex = "-1"; // prova!!!!!!!!!!!!!!!
 
-let span = document.getElementById("span");
+  var ctx = c.getContext("2d");
+  var xMax = (c.width = window.screen.availWidth);
+  var yMax = (c.height = window.screen.availHeight);
 
-const img = new Image(); // Create new img element
-img.src = "/assets/img/pecorelle_t.png";
-let CanvasWidth;
-let CanvasHeight;
-let PositionSheepFrameSheet = 0;
-let SheepActualRatio;
-const SheepOriginalPixel = 121;
-const SheepOriginalRatio = 6.9586776859504132231404958677686;
-let SheepPositionActualLeft = 20;
-let SheepPositionActualBottom = 20;
-let W, H;
-const PositionSheepFrameSheetSelect = [1, 0, 1, 2, 3, 4, 1, 0, 1];
-let actualFrame = 0;
+  var hmTimes = Math.round(xMax + yMax) / 3; // quantita' stelle rispetto ai lati di base Math.round(xMax + yMax)
+  let yMaxCapped = (yMax / 3) * 1.8; // aggiunta da me per limitare il cielo ad un altezza minima cappata sull orizzonte
+  for (var i = 0; i <= hmTimes; i++) {
+    var randomX = Math.floor(Math.random() * xMax + 1); //calcolo x random xMax original
+    var randomY = Math.floor(Math.random() * yMaxCapped + 1); //calcolo y random xMax original
+    var randomSize = Math.floor(Math.random() * 2 + 1);
+    var randomOpacityOne = Math.floor(Math.random() * 9 + 1);
+    var randomOpacityTwo = Math.floor(Math.random() * 9 + 1);
+    var randomHue = Math.floor(Math.random() * 360 + 1);
+    if (randomSize > 1) {
+      ctx.shadowBlur = Math.floor(Math.random() * 10 + 5);
+      ctx.shadowColor = "white";
+    }
+    ctx.fillStyle =
+      "hsla(" +
+      randomHue +
+      ", 30%, 80%, ." +
+      randomOpacityOne +
+      randomOpacityTwo +
+      ")";
+    ctx.fillRect(randomX, randomY, randomSize, randomSize);
+  }
+}
 
+function drawing_ground() {
+  var c = document.getElementById("ground");
+  c.style.zIndex = "-1"; // prova!!!!!!!!!!!!!!!
+  var ctx = c.getContext("2d");
+
+  wground = document.documentElement.clientWidth;
+  hground = Math.trunc(wground / 5.727891156462585);
+  c.width = wground;
+  //console.log(w, "w");
+  //console.log(h, "h");
+  //quote 842/147 original size ground =5,7278911564625850
+  c.height = hground;
+  //console.log(c.height);
+  const img = new Image();
+  img.onload = () => {
+    //ctx.clearRect(0, 0, xMax, yMax); // pulizia ground precedente se necessario
+    c.style.position = "absolute";
+    c.style.bottom = 0 + "px"; // posizione ground dal basso
+    c.style.left = 0 + "px"; // posizione ground da sx
+    // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+    ctx.drawImage(img, 0, 147, 842, -147, 0, 0, wground, c.height);
+  };
+  img.src = "/assets/img/groundtransp.png"; //sorgente foto groundtransparent
+}
+function drawing_sheep(frame, bottom, left) {
+  var c = document.getElementById("sheep");
+  c.style.zIndex = "-1"; // prova!!!!!!!!!!!!!!!
+  var ctx = c.getContext("2d");
+  //842/121=6,9586776859504132231404958677686 original pecorelle ratio
+  var wwindows = document.documentElement.clientWidth;
+  var w = Math.trunc(wwindows / 6.9586776859504132231404958677686);
+  var h = w;
+  //console.log(w, "w");
+  //console.log(h, "h");
+
+  //c.height = h;
+  c.height = h;
+  c.width = w;
+  const img = new Image();
+  img.onload = () => {
+    //ctx.clearRect(0, 0, xMax, yMax); // pulizia pecora precedente se necessario
+    c.style.position = "absolute";
+    c.style.bottom = bottom + "px"; // posizione pecora dal basso PASSATA in func
+    c.style.left = left + "px"; // posizione pecora da sx PASSATA in func
+    // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
+    ctx.drawImage(img, frame * 121, 0, 121, 121, 0, 0, w, h);
+  };
+  img.src = "/assets/img/whitetransppeco.png"; //sorgente foto groundtransparent
+}
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
-
-function drawSheep() {
-  let canvasSheep = document.getElementById("canvasSheep");
-  const ctx = document.getElementById("canvasSheep").getContext("2d");
-  const img = new Image();
-  const offSetRiga = 0;
-  const offSetColonna = PositionSheepFrameSheetSelect[actualFrame];
-  img.onload = () => {
-    ctx.clearRect(0, 0, canvasSheep.width, canvasSheep.height);
-    canvasSheep.style.position = "absolute";
-    canvasSheep.style.bottom = SheepPositionActualBottom + "px";
-    canvasSheep.style.left = SheepPositionActualLeft + "px";
-    // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
-    ctx.drawImage(
-      img,
-      0 + offSetColonna * SheepOriginalPixel,
-      0 + offSetRiga * SheepOriginalPixel,
-      SheepOriginalPixel,
-      SheepOriginalPixel,
-      0,
-      0,
-      CanvasWidth,
-      CanvasHeight
-    );
-  };
-  img.src = "/assets/img/pecorelle_t.png";
-
-  if (actualFrame > 4) {
-    SheepPositionActualBottom = 20; // da mettre calcolo
-  }
+function sheepx(frame) {
+  var wwindows2 = document.documentElement.clientWidth;
+  var w2 = Math.trunc(wwindows2) / 7;
+  return frame * w2;
 }
-function drawBtn() {
-  // let btn = document.createElement("button");
-  // btn.innerText = "Inc";
-  // document.body.appendChild(btn);
-
-  let fs = CanvasHeight / 25;
-  if (primoGiro) {
-    newBtna = document.createElement("button");
-    newBtna.id = "btnDec";
-    newBtna.innerText = "Dec";
-    newBtna.className = "btnact";
-    document.querySelector("#decr").appendChild(newBtna);
-    newBtnb = document.createElement("button");
-    newBtnb.id = "btnRst";
-    newBtnb.innerText = "Reset";
-    newBtnb.className = "btnact";
-    document.querySelector("#rst").appendChild(newBtnb);
-    newBtnc = document.createElement("button");
-    newBtnc.className = "btnact";
-    newBtnc.id = "btnInc";
-    newBtnc.innerText = "Inc";
-    document.querySelector("#inc").appendChild(newBtnc);
-    primoGiro = false;
-  }
-
-  newBtna.style.fontSize = fs + "rem";
-
-  newBtnb.style.fontSize = fs + "rem";
-
-  newBtnc.style.fontSize = fs + "rem";
-}
-function windowResize() {
-  H = document.getElementById("designArea").clientHeight; // la dimensione senza barre page-up/dw
-  W = document.getElementById("designArea").clientWidth;
-  console.log("Big_H :", H);
-  console.log("Big_W :", W);
-
-  Border_Left = 0;
-  let Ratio = W / H;
-  if (Ratio <= RATIO_BKGR) {
-    Small_W = W;
-    Small_H = Math.trunc(W / RATIO_BKGR);
-    Border_Top = Math.trunc((H - Small_H) / 2);
-    Border_Left = 0;
+function draw_button() {
+  const ksizefontbutton = 8; // piu e' alta piu i buttoni sono piccoli
+  var h2 = Math.trunc(document.documentElement.clientHeight);
+  var w2 = Math.trunc(document.documentElement.clientWidth);
+  if (w2 <= h2) {
+    minimo = w2;
   } else {
-    Border_Top = 0;
-    Small_W = Math.trunc(RATIO_BKGR * H);
-    Small_H = H;
-    Border_Left = Math.trunc((W - Small_W) / 2);
+    minimo = h2;
   }
-  console.log("Small_H :", Small_H);
-  console.log("Small_W :", Small_W);
-  console.log("Border-Top: ", Border_Top);
-  console.log("Border-Left: ", Border_Left);
-  document.getElementById("paintArea").style.width = Small_W + "px";
-  document.getElementById("paintArea").style.height = Small_H + "px";
-
-  var d = document.getElementById("paintArea");
-  d.style.position = "absolute";
-  d.style.left = Border_Left + "px";
-  d.style.top = Border_Top + "px";
-
-  CanvasHeight = Math.trunc(Small_W / SheepOriginalRatio);
-  CanvasWidth = CanvasHeight;
-
-  canvasSheep.width = CanvasWidth;
-  canvasSheep.height = CanvasHeight;
-
-  console.log(CanvasHeight);
-  console.log(CanvasWidth);
-  let fs = Math.round((W / 250) * 10) / 10;
-
-  span.style.fontsize = 1 + "em";
-  span.innerHTML = tot;
-  drawSheep();
-  drawBtn();
+  /////////////////////////BTN 1
+  const createButtonDec = document.createElement("a");
+  let str = "\u2212"; // segno meno per averlo centrato
+  createButtonDec.innerText = str;
+  const ParentDiv = document.querySelector(".buttons");
+  createButtonDec.id = "btndec";
+  createButtonDec.className += "btn btn-2";
+  createButtonDec.position = "relative";
+  createButtonDec.style.fontSize = Math.trunc(minimo / ksizefontbutton) + "px";
+  ParentDiv.appendChild(createButtonDec);
+  /////////////////////////BTN 2
+  const createButtonRst = document.createElement("a");
+  createButtonRst.id = "btnrst";
+  createButtonRst.innerText = "R";
+  createButtonRst.className += "btn btn-2";
+  createButtonRst.position = "relative";
+  createButtonRst.style.fontSize = Math.trunc(minimo / ksizefontbutton) + "px";
+  ParentDiv.appendChild(createButtonRst);
+  /////////////////////////BTN 3
+  const createButtonInc = document.createElement("a");
+  createButtonInc.id = "btninc";
+  createButtonInc.innerText = "+";
+  createButtonInc.className += "btn btn-2";
+  createButtonInc.position = "relative";
+  createButtonInc.style.fontSize = Math.trunc(minimo / ksizefontbutton) + "px";
+  ParentDiv.appendChild(createButtonInc);
+}
+function draw_counter(counter) {
+  document.documentElement.clientHeight <= document.documentElement.clientWidth
+    ? (minimo = document.documentElement.clientHeight)
+    : (minimo = document.documentElement.clientWidth);
+  const element = document.querySelector(".counter");
+  element.textContent = counter.toString();
+  const ksizefontbutton = 8;
+  element.style.fontSize = Math.trunc(minimo / ksizefontbutton) + "px";
+  console.log(
+    (element.height = Math.trunc(document.documentElement.clientHeight / 3))
+  );
+}
+function calc_altezza(frame) {
+  if (frame == 3) {
+    output = hground;
+  } else if (frame == 4 || frame == 2) {
+    output = hground * 0.75; ////kostant
+  } else {
+    output = output = Math.trunc(hground / 10);
+  }
+  return output;
+}
+function beep(suono) {
+  sound = new Audio("/assets/audio/stick.mp3");
+  if (suono == "metro") {
+    sound = new Audio("/assets/audio/metro.mp3");
+  }
+  sound.play();
 }
 
+//////////////////////////////////////////////////////////////////////
+//////////////////////////////////  MAIN /////////////////////////////
+/////drawing_sheep(PECOARRAY[frame], sheepbottom, sheepleft);
 async function init() {
-  window.addEventListener("resize", windowResize);
-  windowResize();
+  const PECOARRAY = [0, 1, 2, 3, 4, 1, 0];
+  let suono = "metro2"; // "metro" per metro.mp3 , qualsiasi altra cosa per l'altro sound
+  const lastframe = 6;
 
-  for (let i = 0; i < 8; i++) {
-    actualFrame++;
-    await sleep(500);
-    if (actualFrame == 0) {
-      windowResize();
-    } else {
-      if (actualFrame == 4) {
-        SheepPositionActualBottom = Small_H / 5;
-      }
-      SheepPositionActualLeft = actualFrame * (Small_W / 10) + 20;
+  var hwindows2 = document.documentElement.clientHeight;
+  var h2 = Math.trunc(hwindows2);
+
+  let hground;
+  let wground;
+
+  drawing_sky();
+  drawing_ground();
+  let frame = 0;
+  let counter = 0;
+  let sheepleft = sheepx(frame);
+  let sheepbottom = calc_altezza(frame);
+  drawing_sheep(PECOARRAY[frame], sheepbottom, sheepleft);
+  draw_button();
+  draw_counter(counter);
+
+  const listdec = document.getElementById("btndec");
+  listdec.addEventListener("click", function () {
+    counter--;
+    frame--;
+    if (frame == -1) {
+      frame = 6;
     }
 
-    windowResize();
-  }
+    sheepleft = sheepx(frame);
+    sheepbottom = calc_altezza(frame);
+    drawing_sheep(PECOARRAY[frame], sheepbottom, sheepleft);
+    draw_counter(counter);
+    beep(suono);
+    //se verso allora il frame zero si comporta in n modo se altro verso in un altro
+  });
+
+  const btnrstlist = document.getElementById("btnrst");
+  btnrstlist.addEventListener("click", function () {
+    counter = 0;
+    frame = 0;
+    sheepleft = sheepx(frame);
+    sheepbottom = calc_altezza(frame);
+    drawing_sheep(PECOARRAY[frame], sheepbottom, sheepleft);
+    draw_counter(counter);
+    beep(suono);
+  });
+  const listinc = document.getElementById("btninc");
+  listinc.addEventListener("click", function () {
+    counter++;
+    frame++;
+    if (frame == 7) {
+      frame = 0;
+    }
+    sheepleft = sheepx(frame);
+    sheepbottom = calc_altezza(frame);
+    drawing_sheep(PECOARRAY[frame], sheepbottom, sheepleft);
+    draw_counter(counter);
+    beep(suono);
+  });
+
+  /*  for (let i = 0; i < 1000; i++) {
+    frame++;
+    counter++; /////////////////////////prova test
+    await sleep(500); //mettere qui variabile SPEED
+    if (frame == 3) {
+      sheepbottom = sheepbottomstart * 40;
+    } else {
+      ///////////////////eventuale piccolo offset minore di 3 +20 , 3 zero,maggiore di 3 -20
+      if (frame == 2 || frame == 4) {
+        sheepbottom = sheepbottomstart * 18;
+      } else sheepbottom = sheepbottomstart;
+    }
+    if (frame == lastframe + 1) {
+      frame = 0;
+    }
+    drawing_sheep(PECOARRAY[frame], sheepbottom, sheepx(frame));
+    draw_counter(counter); ///////solo test
+  } */
 }
+
 window.onload = init;

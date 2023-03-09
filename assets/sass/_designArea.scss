@@ -10,6 +10,8 @@
   background-position: center;
 }
 .act {
+  z-index: 100;
+  overflow: hidden;
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
