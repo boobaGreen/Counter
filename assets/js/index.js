@@ -77,6 +77,7 @@ function drawing_sheep(frame, bottom, left) {
   };
   img.src = "assets/img/whitetransppeco.png"; //sorgente foto groundtransparent
 }
+//////////////// da togliere sleep
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -135,9 +136,6 @@ function draw_counter(counter) {
   element.textContent = counter.toString();
   const ksizefontbutton = 8;
   element.style.fontSize = Math.trunc(minimo / ksizefontbutton) + "px";
-  console.log(
-    (element.height = Math.trunc(document.documentElement.clientHeight / 3))
-  );
 }
 function calc_altezza(frame) {
   if (frame == 3) {
@@ -150,10 +148,8 @@ function calc_altezza(frame) {
   return output;
 }
 function beep(suono) {
-  sound = new Audio("assets/audio/stick.mp3");
-  if (suono == "metro") {
-    sound = new Audio("assets/audio/metro.mp3");
-  }
+  sound = new Audio("assets/audio/metro.mp3");
+
   sound.play();
 }
 
