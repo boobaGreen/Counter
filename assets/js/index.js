@@ -228,25 +228,6 @@ async function init() {
     draw_button();
     draw_counter(counter);
   });
-
-  /*  for (let i = 0; i < 1000; i++) {
-    frame++;
-    counter++; /////////////////////////prova test
-    await sleep(500); //mettere qui variabile SPEED
-    if (frame == 3) {
-      sheepbottom = sheepbottomstart * 40;
-    } else {
-      ///////////////////eventuale piccolo offset minore di 3 +20 , 3 zero,maggiore di 3 -20
-      if (frame == 2 || frame == 4) {
-        sheepbottom = sheepbottomstart * 18;
-      } else sheepbottom = sheepbottomstart;
-    }
-    if (frame == lastframe + 1) {
-      frame = 0;
-    }
-    drawing_sheep(PECOARRAY[frame], sheepbottom, sheepx(frame));
-    draw_counter(counter); ///////solo test
-  } */
 }
 
 window.onload = init;
