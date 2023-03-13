@@ -79,7 +79,7 @@ function drawing_sheep(frame, bottom, left) {
     // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
     ctx.drawImage(img, frame * 121, 0, 121, 121, 0, 0, w, h);
   };
-  img.src = "/assets/img/whitetransppeco.png"; //sorgente foto groundtransparent
+  img.src = "assets/img/whitetransppeco.png"; //sorgente foto groundtransparent
 }
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -148,9 +148,9 @@ function calc_altezza(frame) {
   return output;
 }
 function beep(suono) {
-  sound = new Audio("/assets/audio/stick.mp3");
+  sound = new Audio("assets/audio/stick.mp3");
   if (suono == "metro") {
-    sound = new Audio("/assets/audio/metro.mp3");
+    sound = new Audio("assets/audio/metro.mp3");
   }
   sound.play();
 }
