@@ -54,7 +54,7 @@ function drawing_ground() {
     // drawImage(image, sx, sy, sWidth, sHeight, dx, dy, dWidth, dHeight)
     ctx.drawImage(img, 0, 147, 842, -147, 0, 0, wground, c.height);
   };
-  img.src = "/assets/img/groundtransp.png"; //sorgente foto groundtransparent
+  img.src = "assets/img/groundtransp.png"; //sorgente foto groundtransparent
 }
 function drawing_sheep(frame, bottom, left) {
   var c = document.getElementById("sheep");
