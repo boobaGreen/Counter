@@ -1,5 +1,5 @@
-da mettere a posto larghezza caratteri , pecorella ed altezza ostacolo e larghezza ground
+da mettere a posto larghezza caratteri , pecorella altezza ed altezza ostacolo e larghezza ground
 
 aggiungere metronomo e mute/notina
 
-aggiungere calcolo per auto e fare metronomo mode
+aggiungere calcolo per auto-mode e fare metronomo mode

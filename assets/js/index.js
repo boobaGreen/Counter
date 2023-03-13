@@ -5,6 +5,7 @@ function drawing_sky() {
 
   var ctx = c.getContext("2d");
   var xMax = (c.width = window.screen.availWidth);
+  console.log(xMax);
   var yMax = (c.height = window.screen.availHeight);
 
   var hmTimes = Math.round(xMax + yMax) / 3; // quantita' stelle rispetto ai lati di base Math.round(xMax + yMax)
@@ -159,7 +160,7 @@ function beep(suono) {
 /////drawing_sheep(PECOARRAY[frame], sheepbottom, sheepleft);
 async function init() {
   const PECOARRAY = [0, 1, 2, 3, 4, 1, 0];
-  let suono = "metro2"; // "metro" per metro.mp3 , qualsiasi altra cosa per l'altro sound
+  let suono = "metro"; // "metro" per metro.mp3 , qualsiasi altra cosa per l'altro sound
   const lastframe = 6;
 
   var hwindows2 = document.documentElement.clientHeight;
