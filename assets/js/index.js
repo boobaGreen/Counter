@@ -64,10 +64,6 @@ function drawing_sheep(frame, bottom, left) {
   var wwindows = document.documentElement.clientWidth;
   var w = Math.trunc(wwindows / 6.9586776859504132231404958677686);
   var h = w;
-  //console.log(w, "w");
-  //console.log(h, "h");
-
-  //c.height = h;
   c.height = h;
   c.width = w;
   const img = new Image();
@@ -124,6 +120,12 @@ function draw_button() {
   createButtonInc.position = "relative";
   createButtonInc.style.fontSize = Math.trunc(minimo / ksizefontbutton) + "px";
   ParentDiv.appendChild(createButtonInc);
+}
+function removeBtn() {
+  parent = document.querySelector("#buttons");
+  while (parent.firstChild) {
+    parent.removeChild(parent.firstChild);
+  }
 }
 function draw_counter(counter) {
   document.documentElement.clientHeight <= document.documentElement.clientWidth
@@ -217,6 +219,18 @@ async function init() {
     drawing_sheep(PECOARRAY[frame], sheepbottom, sheepleft);
     draw_counter(counter);
     beep(suono);
+  });
+  window.addEventListener("resize", function (event) {
+    hwindows2 = document.documentElement.clientHeight;
+    h2 = Math.trunc(hwindows2);
+    drawing_sky();
+    drawing_ground();
+    sheepleft = sheepx(frame);
+    sheepbottom = calc_altezza(frame);
+    drawing_sheep(PECOARRAY[frame], sheepbottom, sheepleft);
+    removeBtn();
+    draw_button();
+    draw_counter(counter);
   });
 
   /*  for (let i = 0; i < 1000; i++) {
